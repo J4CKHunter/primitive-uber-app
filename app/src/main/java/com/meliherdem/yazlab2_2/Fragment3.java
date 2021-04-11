@@ -22,8 +22,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Fragment3 extends Fragment {
-    String location1= "40.62572424,-73.82612577";
-    String location2= "42.62572424,-73.82612577";
+    String location1= "Times Sq/Theatre District";
+    String location2= "Central Harlem";
     Button btTrack;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
