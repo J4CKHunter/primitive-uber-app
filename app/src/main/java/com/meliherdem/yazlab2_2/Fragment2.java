@@ -24,10 +24,11 @@ public class Fragment2 extends Fragment {
         text= view.findViewById(R.id.WriteText);
         textDate1= view.findViewById(R.id.TextDate1);
         textDate2=view.findViewById(R.id.TextDate2);
+        //"2020-01-01"
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                text.setText("1.Tarih"+textDate1.getText()+"2.Tarih"+textDate2.getText());
+                MainActivity.sorguTwo(textDate1.getText().toString(),textDate2.getText().toString(),text);
             }
         });
         return view;

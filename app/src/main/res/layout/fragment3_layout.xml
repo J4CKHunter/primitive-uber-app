@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="17dp"
-        android:text="Format: 24.09.2020 "
+        android:text="Format: 2020-12-12 "
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
         app:layout_constraintStart_toStartOf="@+id/textView3"

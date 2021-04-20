@@ -43,7 +43,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    //public static MainActivity Instance;
     private static String ip = "34.78.28.63";
     private static String port = "1433";
     private static String Classes = "net.sourceforge.jtds.jdbc.Driver";
@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private static String password = "test";
     private static String url = "jdbc:jtds:sqlserver://"+ip+":"+port+"/"+database;
 
-    private Connection connection = null;
-
+    private static Connection connection = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             Class.forName(Classes);
             connection = DriverManager.getConnection(url, username,password);
             System.out.println("success");
-            } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.out.println("err");
         } catch (SQLException e) {
@@ -81,37 +80,29 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("fail");
         }
 
-        sqlButton();
-        String fsfdsf = "";
     }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void sqlButton(){
+    public static void sorguOne(TextView text){
         if (connection!=null){
             Statement statement = null;
             try {
-
-                String date1 = "2020-01-01";
-                String date2 = "2020-01-01";
-
                 statement = connection.createStatement();
-
-                String query = "SELECT TOP(1) * FROM  [dbo].[yellow_tripdata_2020-12] where [tpep_pickup_datetime] between '2020-12-10' and '2020-12-12' ";
+                //2020-12-10 and 2020-12-12
+                String query = "select cast(tpep_pickup_datetime as date) as 'Tarih' , sum(CAST(passenger_count AS int)) as 'yolcu_sayisi'\n" +
+                        "FROM  [dbo].[yellow_tripdata_2020-12]   group by cast(tpep_pickup_datetime as date) ORDER BY 'yolcu_sayisi'  desc OFFSET (0) ROWS \n" +
+                        "  FETCH NEXT 5 ROWS ONLY;";
 
                 ResultSet resultSet = statement.executeQuery(query);
-
-                ArrayList<Taxi> list = new ArrayList<Taxi>();
+                String allText= "";
+                //ArrayList<Taxi> list = new ArrayList<Taxi>();
+                //DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+                //String strDate = dateFormat.format(date);
+                allText+= "Tarih"+" YolcuSayısı"+"\n";
                 while (resultSet.next()){
-                    String xxx =resultSet.getString("tpep_pickup_datetime");
-                    String yy ="";
-
+                    allText+=resultSet.getString(1)+ " "+resultSet.getString(2)+"\n";
                 }
 
-                DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
-                //String strDate = dateFormat.format(date);
-
-                String xx ="";
-
+                text.setText(allText);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -120,10 +111,38 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Connection is null");
         }
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void sorguTwo(String date1,String date2,TextView text){
+        if (connection!=null){
+            Statement statement = null;
+            try {
+                statement = connection.createStatement();
+                //2020-12-10 and 2020-12-12
+                String query = "SELECT tpep_pickup_datetime, tpep_dropoff_datetime,cast(trip_distance as float) as 'trip_distance',PULocationID,DOLocationID,total_amount FROM [dbo].[yellow_tripdata_2020-12] \n" +
+                        "where cast(tpep_pickup_datetime as date)between '"+date1+"' and '"+date2+"' and cast(trip_distance as float) > 0 order by 'trip_distance' asc OFFSET (0) ROWS \n" +
+                        "  FETCH NEXT 5 ROWS ONLY;";
 
+                ResultSet resultSet = statement.executeQuery(query);
+                String allText= "";
+                //ArrayList<Taxi> list = new ArrayList<Taxi>();
+                //DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+                //String strDate = dateFormat.format(date);
+                allText+= "Pickup_date"+" Dropoff_date"+" Distance"+ " PULocation"+" DOLocation"+" Amount"+"\n";
+                while (resultSet.next()){
+                    allText+=resultSet.getString(1).substring(0,19)+ " "+resultSet.getString(2).substring(0,19)+ " "+resultSet.getString(3)+ " "+resultSet.getString(4)+ " "+resultSet.getString(5)+" "+resultSet.getString(6)+"\n";
+                }
 
+                text.setText(allText);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("Connection is null");
+        }
+    }
 }
-
+/*
 class Test{
 
     Test(int id, String name){
@@ -143,4 +162,4 @@ class Taxi{
 
     int VendorID;
     DateTime Tpep_pickup_datetime;
-}
+}*/
