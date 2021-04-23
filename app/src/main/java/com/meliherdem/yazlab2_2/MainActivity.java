@@ -124,9 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
                 ResultSet resultSet = statement.executeQuery(query);
                 String allText= "";
-                //ArrayList<Taxi> list = new ArrayList<Taxi>();
-                //DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
-                //String strDate = dateFormat.format(date);
                 allText+= "Pickup_date"+" Dropoff_date"+" Distance"+ " PULocation"+" DOLocation"+" Amount"+"\n";
                 while (resultSet.next()){
                     allText+=resultSet.getString(1).substring(0,19)+ " "+resultSet.getString(2).substring(0,19)+ " "+resultSet.getString(3)+ " "+resultSet.getString(4)+ " "+resultSet.getString(5)+" "+resultSet.getString(6)+"\n";
@@ -141,25 +138,57 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("Connection is null");
         }
     }
-}
-/*
-class Test{
-
-    Test(int id, String name){
-        Id = id;
-        Name = name;
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void sorguThree1(String date){
+        if (connection!=null){
+            Statement statement = null;
+            try {
+                statement = connection.createStatement();
+                //2020-12-10 and 2020-12-12
+                String query = "SELECT cast(tpep_pickup_datetime as date)  as tarih ,PULocationID,DOLocationID,cast(trip_distance as float) as 'trip_distance',tzl.Borough as PUBorough ,tzl.Zone as PUZone,\n" +
+                        "\ttzl.latitude as Latitude, tzl.longitude as Longitude\n" +
+                        "FROM [dbo].[yellow_tripdata_2020-12] td inner join [dbo].[taxi_zones] tzl\n" +
+                        "    on td.PULocationID=tzl.LocationID where cast(tpep_pickup_datetime as date) = "+date+" order by cast(trip_distance as float) desc OFFSET (0) ROWS \n" +
+                        "  FETCH NEXT 1 ROWS ONLY;";
+                ResultSet resultSet = statement.executeQuery(query);
+                String DOlocationID= "";
+                String startLatitude= "";
+                String startLongtitude= "";
+                while (resultSet.next()){
+                    DOlocationID= resultSet.getString(3);
+                    startLatitude= resultSet.getString(7);
+                    startLongtitude= resultSet.getString(8);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("Connection is null");
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void sorguThree2(String LocationID){
+        if (connection!=null){
+            Statement statement = null;
+            try {
+                statement = connection.createStatement();
+                //2020-12-10 and 2020-12-12
+                String query = "select LocationID, latitude, longitude from [dbo].[taxi_zones] where LocationID ="+ LocationID+";";
+                ResultSet resultSet = statement.executeQuery(query);
+                String endLatitude= "";
+                String endLongtitude= "";
+                while (resultSet.next()){
+                    endLatitude= resultSet.getString(2);
+                    endLongtitude= resultSet.getString(3);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("Connection is null");
+        }
     }
 
-    int Id;
-    String Name;
 }
-
-class Taxi{
-    Taxi(int vendorId, DateTime date){
-        VendorID = vendorId;
-        Tpep_pickup_datetime = date;
-    }
-
-    int VendorID;
-    DateTime Tpep_pickup_datetime;
-}*/
