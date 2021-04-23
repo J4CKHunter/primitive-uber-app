@@ -32,16 +32,18 @@ public class Fragment3 extends Fragment {
         btTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sSource = location1.trim();
+                Intent in = new Intent(getActivity(),SubActivity.class);
+                in.putExtra("some","some data");
+                startActivity(in);
+                /*String sSource = location1.trim();
                 String sDestination= location2.trim();
 
                 if(sSource.equals("")&&sDestination.equals(""))
                 {
-
                 }
                 else {
                     DisplayTrack(sSource,sDestination);
-                }
+                }*/
             }
         });
         return view;
