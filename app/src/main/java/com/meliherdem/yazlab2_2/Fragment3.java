@@ -34,8 +34,10 @@ public class Fragment3 extends Fragment {
         btTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SubActivity.getDate(textDate1.getText().toString());
                 Intent in = new Intent(getActivity(),SubActivity.class);
-                SubActivity.date= textDate1.getText().toString();
+                //SubActivity.date= textDate1.getText().toString();
+
                 startActivity(in);
             }
         });

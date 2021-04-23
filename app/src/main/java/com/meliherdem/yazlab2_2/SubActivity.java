@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.location.Location;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,10 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubActivity extends AppCompatActivity implements OnMapReadyCallback,RoutingListener {
-
     //google map object
     private GoogleMap mMap;
-    public static String date= "";
+    public  static String date= "";
+    String[] list = new String[4];
+    String[] list2 = new String[2];
     //current and destination location objects
     Location myLocation=null;
     Location destinationLocation=null;
@@ -57,17 +59,27 @@ public class SubActivity extends AppCompatActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
-        MainActivity.sorguThree1(date);
+        list = MainActivity.sorguThree1(date);
+        list2 = MainActivity.sorguThree2(list[0]);
+        Log.d("CREATION",list2[0]+"çalıştı");
+       // MainActivity.sorguThree2(list.get(0));
     }
-
+    public static void getDate(String tarih)
+    {
+        date =tarih;
+        Log.d("CREATION",date);
+        //System.out.println(date);
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng start = new LatLng(40.67362003,-73.77211628);
-        LatLng end = new LatLng(40.52729818,-74.22954655);
+        Log.d("CREATION",Double.parseDouble(list[1])+"Başlangıç x");
+        Log.d("CREATION",Double.parseDouble(list[2])+"Başlangıç y");
+        Log.d("CREATION",Double.parseDouble(list2[0])+"Bitiş x");
+        Log.d("CREATION",Double.parseDouble(list2[1])+"Bitiş y");
+        LatLng start = new LatLng(Double.parseDouble(list[2]),Double.parseDouble(list[1]));
+        LatLng end = new LatLng(Double.parseDouble(list2[1]),Double.parseDouble(list2[0]));
         Findroutes(start ,end);
     }
 
@@ -105,7 +117,7 @@ public class SubActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onRoutingStart() {
-        Toast.makeText(SubActivity.this,"Finding Route...",Toast.LENGTH_LONG).show();
+        Toast.makeText(SubActivity.this,"Uzunluk: "+ list[3],Toast.LENGTH_LONG).show();
     }
 
     //If Route finding success..

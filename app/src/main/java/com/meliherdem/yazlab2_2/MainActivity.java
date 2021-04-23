@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -139,7 +140,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void sorguThree1(String date){
+    public static String[] sorguThree1(String date){
+        String[] list = new String[4];
+        String DOlocationID= "1";
+        String startLatitude= "2";
+        String startLongtitude= "3";
+        String trip_distance= "3";
         if (connection!=null){
             Statement statement = null;
             try {
@@ -148,17 +154,17 @@ public class MainActivity extends AppCompatActivity {
                 String query = "SELECT cast(tpep_pickup_datetime as date)  as tarih ,PULocationID,DOLocationID,cast(trip_distance as float) as 'trip_distance',tzl.Borough as PUBorough ,tzl.Zone as PUZone,\n" +
                         "\ttzl.latitude as Latitude, tzl.longitude as Longitude\n" +
                         "FROM [dbo].[yellow_tripdata_2020-12] td inner join [dbo].[taxi_zones] tzl\n" +
-                        "    on td.PULocationID=tzl.LocationID where cast(tpep_pickup_datetime as date) = "+date+" order by cast(trip_distance as float) desc OFFSET (0) ROWS \n" +
+                        "    on td.PULocationID=tzl.LocationID where cast(tpep_pickup_datetime as date) = '"+date+"' order by cast(trip_distance as float) desc OFFSET (0) ROWS \n" +
                         "  FETCH NEXT 1 ROWS ONLY;";
                 ResultSet resultSet = statement.executeQuery(query);
-                String DOlocationID= "";
-                String startLatitude= "";
-                String startLongtitude= "";
+
                 while (resultSet.next()){
                     DOlocationID= resultSet.getString(3);
                     startLatitude= resultSet.getString(7);
                     startLongtitude= resultSet.getString(8);
+                    trip_distance =resultSet.getString(4);
                 }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -166,9 +172,17 @@ public class MainActivity extends AppCompatActivity {
         else {
             System.out.println("Connection is null");
         }
+        list[0]= DOlocationID;
+        list[1]= startLatitude;
+        list[2]= startLongtitude;
+        list[3]= trip_distance;
+        return list;
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void sorguThree2(String LocationID){
+    public static String[] sorguThree2(String LocationID){
+        String[] list2 = new String[3];
+        String endLatitude = "";
+        String endLongtitude ="";
         if (connection!=null){
             Statement statement = null;
             try {
@@ -176,11 +190,11 @@ public class MainActivity extends AppCompatActivity {
                 //2020-12-10 and 2020-12-12
                 String query = "select LocationID, latitude, longitude from [dbo].[taxi_zones] where LocationID ="+ LocationID+";";
                 ResultSet resultSet = statement.executeQuery(query);
-                String endLatitude= "";
-                String endLongtitude= "";
+
                 while (resultSet.next()){
-                    endLatitude= resultSet.getString(2);
-                    endLongtitude= resultSet.getString(3);
+                    endLatitude = resultSet.getString(2);
+                    endLongtitude = resultSet.getString(3);
+
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -189,6 +203,12 @@ public class MainActivity extends AppCompatActivity {
         else {
             System.out.println("Connection is null");
         }
+        //endLatitude=endLatitude/100;
+        //endLongtitude=endLongtitude/100;
+        Log.d("CREATION",endLongtitude+"oldu galiba");
+        list2[0]= endLatitude;
+        list2[1]= endLongtitude;
+        return list2;
     }
 
 }
