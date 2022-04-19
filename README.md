@@ -15,3 +15,5 @@ Bu android uygulaması
 * sorgu sonuçlarının uygulama ekranında gösterilmesini, 
 * sorgu sonucuna göre Google Maps API kullanılarak harita gösterimini, 
 * harita üzerinde iki lokasyon arasındaki en kısa rotanın çizimi gibi işlemleri gerçekleştirir.
+* Projede gerçekleştirilmesi istenenleri [dökümantasyon dosyasında](https://github.com/J4CKHunter/primitive-uber-app/blob/master/proje%202.pdf) bulabilirsiniz.
+*  Projede gerçekleştirilen isterler ile ilgili detaylı açıklamalar [proje raporunun](https://github.com/J4CKHunter/primitive-uber-app/blob/master/Rapor_180202060_180202050.pdf) içerisindedir.
