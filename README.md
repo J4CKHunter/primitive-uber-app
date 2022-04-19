@@ -17,3 +17,10 @@ Bu android uygulaması
 * harita üzerinde iki lokasyon arasındaki en kısa rotanın çizimi gibi işlemleri gerçekleştirir.
 * Projede gerçekleştirilmesi istenenleri [dökümantasyon dosyasında](https://github.com/J4CKHunter/primitive-uber-app/blob/master/proje%202.pdf) bulabilirsiniz.
 *  Projede gerçekleştirilen isterler ile ilgili detaylı açıklamalar [proje raporunun](https://github.com/J4CKHunter/primitive-uber-app/blob/master/Rapor_180202060_180202050.pdf) içerisindedir.
+
+### example screenshots from app
+
+[<img src="https://raw.githubusercontent.com/J4CKHunter/primitive-uber-app/master/screenshots/1.jpg" width="300"/>](1.png)
+[<img src="https://raw.githubusercontent.com/J4CKHunter/primitive-uber-app/master/screenshots/2.jpg" width="300"/>](2.png)
+[<img src="https://raw.githubusercontent.com/J4CKHunter/primitive-uber-app/master/screenshots/3.jpg" width="300"/>](3.png)
+
