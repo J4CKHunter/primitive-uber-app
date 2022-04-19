@@ -1,4 +1,4 @@
-# MobilSorgular-YazLab2-Proje2
+# primitive-uber-app
 
 android mobile app with java. it can be considered as a primitive uber app.
 
